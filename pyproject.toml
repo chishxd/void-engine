@@ -15,3 +15,43 @@ dependencies = [
 
 [project.scripts]
 void-engine = "void_engine.__main__:main"
+
+[dependency-groups]
+dev = [
+    "ruff>=0.14.2",
+    "textual-dev>=1.8.0",
+]
+
+[tool.ruff]
+line-length = 88
+indent-width = 4
+
+target-version = "py313"
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # Pyflakes
+    "I",  # isort (import sorting)
+    "N",  # pep8-naming
+    "D",  # pydocstyle (documentation)
+    "UP", # pyupgrade
+    "B",  # flake8-bugbear (finds likely bugs)
+    "A",  # flake8-builtins (prevents shadowing builtins)
+    "C4", # flake8-comprehensions (encourages simpler comprehensions)
+    "SIM",# flake8-simplify (refactoring suggestions)
+    "PTH",# flake8-use-pathlib (use pathlib instead of os.path)
+]
+
+
+ignore = ["D100"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
