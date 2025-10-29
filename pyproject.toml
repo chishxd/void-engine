@@ -1,7 +1,15 @@
+[build-system]
+requires = ["uv_build >= 0.9.5, <0.10.0"]
+build-backend = "uv_build"
+
 [project]
 name = "void-engine"
 version = "0.1.0"
-description = "Add your description here"
+description = "Welcome to the future! We present you the most advance voice engine to use your computer!"
 readme = "README.md"
+license = "MIT"
 requires-python = ">=3.12"
 dependencies = []
+
+[project.scripts]
+void-engine = "void_engine.__main__:main"
