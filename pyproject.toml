@@ -9,7 +9,9 @@ description = "Welcome to the future! We present you the most advance voice engi
 readme = "README.md"
 license = "MIT"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "textual>=6.4.0",
+]
 
 [project.scripts]
 void-engine = "void_engine.__main__:main"
