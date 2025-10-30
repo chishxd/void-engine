@@ -1,9 +1,33 @@
 Screen{
     background: #070709;
     color: #c0c0c4ff;
+    align: center middle;
+    padding: 1;
 }
 
 #command_panel, #visualizer_panel, #logs_panel{
     border: green;
     border-title-style: bold;
 }
+
+Vertical {
+    width: 1fr;
+    height: 100%;
+    margin: 0 1;
+}
+
+#command_panel {
+    border: green;
+    height: 100%;
+}
+
+#visualizer_panel {
+    border: green;
+    height: 60%; /* Give more space to the visualizer */
+}
+
+#logs_panel {
+    border: green;
+    height: 40%; /* Give less space to the logs */
+}
+
