@@ -1,0 +1,9 @@
+Screen{
+    background: #070709;
+    color: #c0c0c4ff;
+}
+
+#command_panel, #visualizer_panel, #logs_panel{
+    border: green;
+    border-title-style: bold;
+}

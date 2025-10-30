@@ -12,8 +12,8 @@ FOCUS_WORD = "void"
 # This will be used to display the MANUAL in TUI
 COMMANDS = {
     "can you hear me": "Establishes primary link",
-    "what are you": "Display the current ersion and build information",
-    "take control": "Enable mouse-free navigation for accessibility.",
-    "show me a secret": "Open the application's local log file for debugging.",
-    "let me out": "Safely exit and close the application.",
+    "what are you": "Display the current version",
+    "take control": "Enable mouse-free navigation",
+    "show me a secret": "Open the application's log",
+    "let me out": "Exit",
 }
