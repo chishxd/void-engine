@@ -1,6 +1,6 @@
 from textual.app import App, ComposeResult
 from textual.containers import Horizontal, Vertical
-from textual.widgets import Footer, Header, Static
+from textual.widgets import Footer, Header, Input, Static
 
 from void_engine.config import COMMANDS
 
@@ -9,7 +9,7 @@ class CommandPanel(Static):
     def on_mount(self) -> None:
         commands: str = ""
         for cmd in COMMANDS:
-            commands += f"\n{cmd} -- {COMMANDS[cmd]}\n"
+            commands += f"\n[b]{cmd}[/b] -- {COMMANDS[cmd]}\n"
         self.update(commands)
 
 
@@ -23,14 +23,19 @@ class VoidApp(App[None]):
     def compose(self) -> ComposeResult:
         yield Header()
         yield Footer()
-        yield Horizontal(
-            Vertical(
-                CommandPanel("COMMANDS", id="command_panel"),
+        yield Vertical(
+            Horizontal(
+                Vertical(
+                    CommandPanel("COMMANDS", id="command_panel"),
+                ),
+                Vertical(
+                    Static("VISUALIZER", id="visualizer_panel"),
+                    Static("LOGS", id="logs_panel"),
+                ),
+                id="main_content"
             ),
-            Vertical(
-                Static("VISUALIZER", id="visualizer_panel"),
-                Static("Logs", id="logs_panel"),
-            ),
+            Input(placeholder="type 'awaken' and press Enter", id="command_input"),
+            id="app_grid"
         )
 
 

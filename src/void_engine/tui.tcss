@@ -1,33 +1,37 @@
-Screen{
-    background: #070709;
-    color: #c0c0c4ff;
-    align: center middle;
-    padding: 1;
+#app_grid {
+    height: 100%;
+    width: 100%;
+    layout: grid;
+    grid-rows: 1fr 3;
 }
 
-#command_panel, #visualizer_panel, #logs_panel{
-    border: green;
-    border-title-style: bold;
+#main_content {
+    height: 100%;
 }
+
 
 Vertical {
     width: 1fr;
-    height: 100%;
     margin: 0 1;
 }
 
 #command_panel {
-    border: green;
     height: 100%;
 }
 
 #visualizer_panel {
-    border: green;
-    height: 60%; /* Give more space to the visualizer */
+    height: 70%;
 }
 
 #logs_panel {
-    border: green;
-    height: 40%; /* Give less space to the logs */
+    height: 30%;
 }
 
+#command_input {
+    background: transparent;
+    width: 100%;
+}
+
+#command_panel, #visualizer_panel, #logs_panel, #command_input{
+    border: green;
+}
