@@ -38,7 +38,7 @@ class VoidApp(App[None]):
                     CommandPanel("COMMANDS", id="command_panel"),
                 ),
                 Vertical(
-                    Static("VISUALIZER", id="visualizer_panel"),
+                    Static("VISUALIZER: DORMANT", id="visualizer_panel"),
                     Static("LOGS", id="logs_panel"),
                 ),
                 id="main_content",
@@ -47,11 +47,26 @@ class VoidApp(App[None]):
             id="app_grid",
         )
 
+    def reset_border_styles(self) -> None:
+        command_input = self.query("#command_input").first(Input)
+        command_input.styles.border = ("solid", "green")
+        command_input.placeholder = "type 'awaken' and press Enter"
+
     def on_input_submitted(self, event: Input.Submitted):
+        command_input = self.query("#command_input").first(Input)
+
         if event.value.lower() == "awaken":
             self.is_awake: bool = True
             self.query_one("#logs_panel", Static).update("[LOG] > Engine AWAKENED")
-            self.query("#command_input").remove()
+            self.query_one("#visualizer_panel", Static).update("VISUALIZER: LISTENING")
+            if command_input:
+                command_input.remove()
+        else:
+            if command_input:
+                command_input.styles.border = ("heavy", "red")
+                command_input.value = ""
+                command_input.placeholder = "Invalid command"
+                command_input.set_timer(1.0, self.reset_border_styles)
 
 
 if __name__ == "__main__":
