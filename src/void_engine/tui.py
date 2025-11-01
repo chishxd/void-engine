@@ -68,7 +68,7 @@ class VoidApp(App[None]):
                 command_input.placeholder = "Invalid command"
                 command_input.set_timer(1.0, self.reset_border_styles)
 
-
+# The fake main function
 if __name__ == "__main__":
     app = VoidApp()
     app.run()
