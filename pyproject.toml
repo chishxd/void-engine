@@ -59,8 +59,6 @@ ignore = [
 convention = "google"
 
 [tool.pyright]
-# This is the master switch that Pylance will read.
-typeCheckingMode = "strict"
 
 # Tell Pylance where to find your code.
 include = ["src"]

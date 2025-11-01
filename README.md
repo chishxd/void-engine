@@ -21,7 +21,6 @@ Prerequisites:
 
 - uv (https://github.com/astral-sh/uv)
 
-- You may need to install PortAudio for the microphone to work (sudo apt-get install portaudio19-dev on Debian/Ubuntu, sudo dnf install portaudio-devel on Fedora).
 
 ## Installation and Usage
 
@@ -50,12 +49,11 @@ uv run void-engine
 
 ## Usage
 1. Once the TUI loads, type `awaken` and press `Enter`
-2. The engine is now listening... Speak your commands in the mic clearly
-3. Remember to say 'void' before the command, e.g "void, Can you hear me?"
+2. The engine is now listening... Type your commands in the mic clearly
+3. Remember to type 'void' before the command, e.g "void are we connected?"
 
 Built with:
 - Python
 - Textual
-- SpeechRecognition
 
 and... <img src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Undertale_red_soul.svg" height="20" style="vertical-align: text-top;"> DETERMINATION
