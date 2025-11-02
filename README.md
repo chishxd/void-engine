@@ -1,59 +1,76 @@
-# V.O.I.D Engine
-Welcome to the V.O.I.D Engine! A delightful way to communicate with your computer! Please report any unusual behaviours...
+# V.O.I.D. Engine
+
+Welcome to the V.O.I.D. Engine! A delightful new way to interact with your computer. Please report any unexpected... awakenings.
 
 ## A New Companion
-Tired of typing?? We were too. And that's why we present to you, **V**irtualised **O**bject **I**njection **D**aemon, a state-of-art interface that listens to your voice commands to perform several system actions.
 
-## Documented Commands
-This engine comes equipped with many voice commands, once awakened, simply use the focus word "void" later followed by our command!
+Tired of endless clicking? We were too. That's why we developed the **V**irtualized **O**bject **I**njection **D**aemon, a state-of-the-art terminal interface that accepts your typed commands to perform a variety of helpful system interactions.
 
-- Establish a link with engine
-- Request Visual Feedback from the system
-- Interact with your desktop environment
-- and much more...
+It's a simple way to enhance your desktop experience, right from the comfort of your command line.
 
-## Getting Started
-Ready to meet your new companion? Here’s how to get it running.
+## Features
 
-Prerequisites:
+-   **Deceptive Commands:** A helpful list of commands whose... *actual* outcomes are a delightful surprise.
+-   **Interactive Scares:** The application reacts to your commands with full sensory feedback, including sound and visual effects.
+-   **Cross-Platform Horror:** A unique experience for both Windows and Linux users.
+-   **The Final Word:** The engine doesn't like to be contained.
 
-- Python 3.12+
+## Installation
 
-- uv (https://github.com/astral-sh/uv)
+### Option 1: From PyPI (Recommended)
 
+This is the easiest way to install the V.O.I.D. Engine.
 
-## Installation and Usage
-
-Simply run:
 ```shell
-uv run void-engine
+uv pip install void-engine
+```
+Then, simply run the installed command:
+```shell
+void-engine
 ```
 
-It will install and run the engine for you
+### Option 2: From Source (For Developers)
 
-But if you wanna install it in a harder way, or if `uv run` does not work:
+If you'd like to run the project from the source code:
 
-Clone the repo
+1.  **Clone the repository:**
+    ```shell
+    git clone https://github.com/chishxd/void-engine.git
+    cd void-engine
+    ```
+2.  **Create the environment and install dependencies:**
+    ```shell
+    uv venv
+    uv sync
+    ```
+3.  **Run the project:**
+    ```shell
+    uv run python -m void_engine
+    ```
+
+### ⚠️ Linux Prerequisites
+
+On Linux, a few system packages are required for the audio and scare effects to work.
+
+**On Fedora / RPM-based systems:**
 ```shell
-git clone https://github.com/chishxd/void-engine.git && cd void-engine
+sudo dnf install alsa-lib-devel scrot
 ```
-Create a venv and install dependencies
+
+**On Debian / Ubuntu-based systems:**
 ```shell
-uv venv
-uv sync
-```
-Run the project
-```shell
-uv run void-engine
+sudo apt-get install libasound2-dev scrot
 ```
 
 ## Usage
-1. Once the TUI loads, type `awaken` and press `Enter`
-2. The engine is now listening... Type your commands in the mic clearly
-3. Remember to type 'void' before the command, e.g "void are we connected?"
 
-Built with:
-- Python
-- Textual
+1.  Once the TUI loads, type `awaken` and press `Enter`.
+2.  The engine is now active. Type your commands into the input prompt at the bottom.
+3.  Remember to start with the focus word "**void**" before the command, e.g., `void can you hear me`.
 
-and... <img src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Undertale_red_soul.svg" height="20" style="vertical-align: text-top;"> DETERMINATION
+## Built With
+
+-   Python
+-   Textual
+<br><br>
+   ...and <img src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Undertale_red_soul.svg" height="20" style="vertical-align: text-top;"> DETERMINATION.
