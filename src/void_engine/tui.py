@@ -40,6 +40,70 @@ JUMPSCARE_ART = """
 """
 
 
+HEARTBEAT_FRAMES = [
+    r"""
+
+[green]                    ⢀⠤⠒⠒⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠒⠒⠤⡀                    [/]
+
+""",
+    r"""
+
+[green]                  ⡠⠒⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠒⠤                  [/]
+
+""",
+    r"""
+
+[green]                ⡠⠒⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠒⠤                [/]
+
+""",
+    r"""
+
+[green]              ⡠⠒⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠒⠤              [/]
+
+""",
+    r"""
+
+[green]            ⢀⠤⠒⠒⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠒⠒⠤⢀            [/]
+
+""",
+    r"""
+
+[green]          ⡠⠒⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠒⠤          [/]
+
+""",
+    r"""
+
+[green]        ⢀⠤⠒⠒⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠒⠒⠤⢀        [/]
+
+""",
+    r"""
+
+[green]      ⡠⠒⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠒⠒⠤[red]⢀⠤⠒⠒⠉⠉⠉⠉⠉[/red]⠒⠒⠤⡀⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠒⠤      [/]
+
+""",
+    r"""
+
+[green]    ⢀⠤⠒⠒⠉⠉⠉⠉⠉⠉⠉⠉⠉⠒⠒⠤⡀    [red]⡠⠒⠉⠉⠉[/red]    ⢀⠤⠒⠒⠉⠉⠉⠉⠉⠉⠉⠉⠒⠒⠤⡀    [/]
+
+""",
+    r"""
+
+[green]  ⡠⠒⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠒⠤  [red]⢀⠤⠒⠒⠉⠉[/red]  ⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠒⠤  [/]
+
+""",
+    r"""
+
+[green] ⢀⠤⠒⠒⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠒⠒⠤⡀⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠒⠒⠤⢀ [/]
+
+""",
+    r"""
+
+[green]⡠⠒⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠒⠤[/]
+
+""",
+]
+
+
 class CommandPanel(Static):
     def on_mount(self) -> None:
         commands_text: str = ""
@@ -60,6 +124,13 @@ class VoidApp(App[None]):
         self.is_awake: bool = False
         self.ticking_process = None
         self.ticking_timer = None
+        self.animation_timer = None
+        self.current_frame: int = 0
+
+    def update_heartbeat(self) -> None:
+        visualizer = self.query_one("#visualizer_panel", Static)
+        visualizer.update(HEARTBEAT_FRAMES[self.current_frame])
+        self.current_frame = (self.current_frame + 1) % len(HEARTBEAT_FRAMES)
 
     def on_unmount(self) -> None:
         import platform
@@ -158,6 +229,7 @@ class VoidApp(App[None]):
                 self.query_one("#visualizer_panel", Static).update(
                     "[b green]VISUALIZER: LISTENING[/b green]"
                 )
+                self.animation_timer = self.set_interval(0.1, self.update_heartbeat)
                 command_input.placeholder = "Enter command..."
 
                 try:
@@ -226,6 +298,9 @@ class VoidApp(App[None]):
                 if self.ticking_process and self.ticking_process.poll() is None:
                     self.ticking_process.terminate()
                     self.ticking_process = None
+                if self.animation_timer:
+                    self.animation_timer.stop()
+
 
                 action_play_scream()
 
