@@ -83,19 +83,21 @@ class VoidApp(App[None]):
         user_text = command_input.value.strip().lower()
         log_panel = self.query_one("#logs_panel", Static)
 
-        if event.value.lower() == "awaken":
-            self.is_awake: bool = True
-            self.query_one("#logs_panel", Static).update("[LOG] > Engine AWAKENED")
-            self.query_one("#visualizer_panel", Static).update("VISUALIZER: LISTENING")
-            command_input.value = ""
-            command_input.placeholder = "Enter command"
-        else:
-            if command_input:
+        if not self.is_awake:
+            if user_text == "awaken":
+                self.is_awake = True
+                log_panel.update("[LOG] > Engine AWAKENED")
+                self.query_one("#visualizer_panel", Static).update(
+                    "[b green]VISUALIZER: LISTENING[/b green]"
+                )
+                command_input.placeholder = "Enter command..."
+            else:
                 command_input.styles.border = ("heavy", "red")
-                command_input.value = ""
                 command_input.placeholder = "Invalid command"
-                command_input.set_timer(1.0, self.reset_border_styles)
+                self.set_timer(1.0, self.reset_input_border)
 
+            command_input.value = ""
+            return
 
 # The fake main function
 if __name__ == "__main__":
