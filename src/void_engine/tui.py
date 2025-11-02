@@ -9,7 +9,8 @@ from void_engine.actions import (
     action_play_glitch_sound,
     action_play_scream,
     action_respond_to_user,
-    action_take_control
+    action_take_control,
+    action_open_secret_folder
 )
 from void_engine.config import COMMANDS
 
@@ -161,6 +162,10 @@ class VoidApp(App[None]):
             elif command == "take control":
                 action_take_control()
                 log_panel.update("[LOG] > Finally...")
+
+            elif command == "show me a secret":
+                action_open_secret_folder()
+                log_panel.update("[LOG] > RISKY COM@!@D#")                
 
 
             else:
