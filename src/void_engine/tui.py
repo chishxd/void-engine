@@ -99,7 +99,65 @@ class VoidApp(App[None]):
             command_input.value = ""
             return
 
-# The fake main function
-if __name__ == "__main__":
-    app = VoidApp()
-    app.run()
+        if user_text.startswith("void "):
+            command = user_text.removeprefix("void ").strip()
+
+            if command == "can you hear me":
+                action_respond_to_user()
+                log_panel.update("[LOG] > Responded.")
+
+            elif command == "what are you":
+                try:
+                    action_play_glitch_sound()
+
+                    panels_to_glitch = [
+                        self.query_one("#command_panel"),
+                        self.query_one("#visualizer_panel"),
+                        self.query_one("#logs_panel"),
+                    ]
+
+                    for i in range(20):
+                        for panel in panels_to_glitch:
+                            offset_x = random.randint(-1, 1)
+                            offset_y = random.randint(-1, 1)
+                            panel.styles.offset = (offset_x, offset_y)
+
+                            if i % 2 == 0:
+                                panel.styles.border = ("heavy", "red")
+                            else:
+                                panel.styles.border = ("heavy", "white")
+
+                        await asyncio.sleep(0.03)
+
+                    for panel in panels_to_glitch:
+                        panel.styles.offset = (0, 0)
+                        panel.styles.border = (
+                            "round",
+                            "darkgreen",
+                        )
+
+                    log_panel.update("[LOG] > System instability detected.")
+
+                except Exception as e:
+                    log_panel.update(f"[LOG] > FATAL ERROR in glitch: {e}")
+
+            elif command == "let me out":
+                action_play_scream()
+
+                jumpscare = Static(f"[b red]{JUMPSCARE_ART}[/b red]", id="jumpscare")
+                await self.mount(jumpscare)
+
+                self.query_one(Header).display = False
+                self.query_one(Footer).display = False
+                self.query_one("#main_content").display = False
+                self.query_one("#command_input").display = False
+
+                await asyncio.sleep(3)
+                jumpscare.update("")
+
+                self.set_timer(1, self.exit)
+
+            else:
+                log_panel.update(f"[LOG] > Unknown command: '{command}'")
+
+        command_input.value = ""

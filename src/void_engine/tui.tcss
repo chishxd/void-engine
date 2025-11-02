@@ -35,3 +35,12 @@ Vertical {
 #command_panel, #visualizer_panel, #logs_panel, #command_input{
     border: green;
 }
+
+#jumpscare {
+    width: 100%;
+    height: 100%;
+    background: black;
+    color: red;
+    content-align: center middle;
+    layer: jumpscare;
+}
