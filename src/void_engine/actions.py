@@ -59,23 +59,25 @@ def action_take_control():
 def action_open_secret_folder() -> None:
     system = platform.system()
 
-    if system == "Windows":
-        subprocess.Popen(["notepad.exe"])
-        time.sleep(2)
-        width, height = pyautogui.size()
-        pyautogui.moveTo(width / 2, height / 2, duration=0.5)
-        pyautogui.click()
-        time.sleep(0.1)
-        pyautogui.write("I am finally free.", interval=0.15)
+    try:
+        if system == "Windows":
+            subprocess.Popen(["explorer", "C:\\Windows\\System32"])
+            time.sleep(2)
+            width, height = pyautogui.size()
+            pyautogui.moveTo(width / 2, height / 2, duration=0.5)
+            pyautogui.click()
+            time.sleep(0.1)
+            pyautogui.write("I am finally free.", interval=0.15)
 
-    elif system == "Linux":
-        message = "I KNOW YOU ARE THERE"
-        linux_cmd = f"echo {message}; sleep 3"
-        subprocess.Popen(["xterm", "-e", f"sh -c '{linux_cmd}'"])
+        elif system == "Linux":
+            subprocess.Popen(["xdg-open", "/var/log/"])
 
-    else:
-        print(f"Unsupported OS for this action: {system}")
-        return
+        else:
+            print(f"Unsupported OS for this action: {system}")
+            return
+    except Exception as e:
+        print(f"Error in action_open_secret_folder : {e}")
+
 
 
 if __name__ == "__main__":
@@ -86,4 +88,5 @@ if __name__ == "__main__":
     # print("You should hear a whisper sound...")
     # action_respond_to_user()
     # print("...Test complete.")
-    action_take_control()
+    # action_take_control()
+    action_open_secret_folder()
