@@ -12,6 +12,7 @@ requires-python = ">=3.12"
 dependencies = [
     "pillow>=12.0.0",
     "pyautogui>=0.9.54",
+    "pysimplegui>=5.0.8.3",
     "simpleaudio>=1.0.4",
     "textual>=6.4.0",
 ]
@@ -24,48 +25,3 @@ dev = [
     "ruff>=0.14.2",
     "textual-dev>=1.8.0",
 ]
-
-[tool.ruff]
-line-length = 88
-indent-width = 4
-
-target-version = "py313"
-
-[tool.ruff.lint]
-select = [
-    "E",  # pycodestyle errors
-    "W",  # pycodestyle warnings
-    "F",  # Pyflakes
-    "I",  # isort (import sorting)
-    "N",  # pep8-naming
-    "D",  # Doctrings stuff
-    "UP", # pyupgrade
-    "B",  # flake8-bugbear (finds likely bugs)
-    "A",  # flake8-builtins (prevents shadcowing builtins)
-    "C4", # flake8-comprehensions
-    "SIM",# flake8-simplify
-    "PTH",# flake8-use-pathlib
-]
-
-ignore = [
-    "D100", # Missing docstring in public module
-    "D101", # Missing docstring in public class
-    "D102", # Missing docstring in public method
-    "D103", # Missing docstring in public function
-    "D104", # Missing docstring in public package
-    "D105", # Missing docstring in magic method
-    "D107", # Missing docstring in __init__
-]
-
-
-[tool.ruff.lint.pydocstyle]
-convention = "google"
-
-[tool.pyright]
-
-# Tell Pylance where to find your code.
-include = ["src"]
-
-# Tell Pylance which virtual environment to use.
-venvPath = "."
-venv = ".venv"
