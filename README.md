@@ -2,6 +2,8 @@
 
 Welcome to the V.O.I.D. Engine! A delightful new way to interact with your computer. Please report any unexpected... awakenings.
 
+![demo](demo.gif)
+
 ## A New Companion
 
 Tired of endless clicking? We were too. That's why we developed the **V**irtualized **O**bject **I**njection **D**aemon, a state-of-the-art terminal interface that accepts your typed commands to perform a variety of helpful system interactions.
