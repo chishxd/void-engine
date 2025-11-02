@@ -61,10 +61,41 @@ class VoidApp(App[None]):
         self.ticking_process = None
         self.ticking_timer = None
 
+    def on_unmount(self) -> None:
+        import platform
+
+        if self.ticking_timer:
+            self.ticking_timer.stop()
+
+        if self.ticking_process and self.ticking_process.poll() is None:
+            self.ticking_process.terminate()
+            self.ticking_process = None
+
+        system = platform.system()
+        try:
+            if system == "Windows":
+                subprocess.run(
+                    ["taskkill", "/F", "/IM", "powershell.exe"],
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                )
+            elif system == "Darwin":
+                subprocess.run(
+                    ["killall", "-9", "afplay"],
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                )
+            else:  # Linux
+                subprocess.run(
+                    ["killall", "-9", "aplay"],
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                )
+        except Exception as e:
+            print(f"Error killing audio processes: {e}")
+
     def check_ticking(self) -> None:
-        """Check if ticking sound process is still running, restart if needed."""
         if self.ticking_process is None or self.ticking_process.poll() is not None:
-            # Process is not running, start it
             try:
                 import platform
 
@@ -81,7 +112,7 @@ class VoidApp(App[None]):
                     ]
                 elif system == "Darwin":
                     cmd = ["afplay", str(sound_path)]
-                else:  # Linux
+                else:
                     cmd = ["aplay", str(sound_path)]
 
                 self.ticking_process = subprocess.Popen(
