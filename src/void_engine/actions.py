@@ -128,6 +128,45 @@ def action_open_secret_folder() -> None:
         print(f"Error in action_open_secret_folder : {e}")
 
 
+def show_image(image_path: str, duration_ms: int):
+    root = tk.Tk()
+
+    root.attributes("-fullscreen", True)
+    root.attributes("-topmost", True)
+    root.config(cursor="none")
+
+    img = ImageTk.PhotoImage(file=image_path)
+    label = tk.Label(root, image=img)
+    label.pack()
+
+    root.after(duration_ms, root.destroy)
+
+    root.mainloop()
+
+
+# def action_glitch_screen() -> None:
+#     glitch_file = Path("glitch.png")
+#     try:
+#         subprocess.run(["scrot", "-o", str(glitch_file)], check=True)
+
+#         # 2. Open the image file we just created with Pillow.
+#         with Image.open(glitch_file) as screenshot:
+#             # 3. Invert the image.
+#             inverted_image = ImageOps.invert(screenshot)
+#             # 4. Save the inverted image back to the same file.
+#             inverted_image.save(glitch_file)
+#         # --- END OF FIX ---
+
+#         for _ in range(3):
+#             show_image(str(glitch_file), 100)
+#             time.sleep(0.5)
+
+#     except Exception as e:
+#         print(f"Error in action_glitch_screen : {e}")
+#     finally:
+#         if glitch_file.exists():
+#             glitch_file.unlink()
+
 
 if __name__ == "__main__":
     # print("Testing the action functions...")
@@ -138,4 +177,5 @@ if __name__ == "__main__":
     # action_respond_to_user()
     # print("...Test complete.")
     # action_take_control()
-    action_open_secret_folder()
+    # action_open_secret_folder()
+    pass
