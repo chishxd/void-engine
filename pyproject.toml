@@ -10,6 +10,7 @@ readme = "README.md"
 license = "MIT"
 requires-python = ">=3.12"
 dependencies = [
+    "simpleaudio>=1.0.4",
     "textual>=6.4.0",
 ]
 
