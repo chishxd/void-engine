@@ -1,32 +1,58 @@
+import asyncio
+import random
+
 from textual.app import App, ComposeResult
 from textual.containers import Horizontal, Vertical
 from textual.widgets import Footer, Header, Input, Static
 
+from void_engine.actions import (
+    action_play_glitch_sound,
+    action_play_scream,
+    action_respond_to_user,
+)
 from void_engine.config import COMMANDS
 
+JUMPSCARE_ART = """
+██████████████████████████████████████████████████
+██████████████████████████████████████████████████
+███████████████▀▀▀▀▀▀▀▀▀▀▀▀▀██████████████████████
+█████████████▀░░░░░░░░░░░░░░░▀████████████████████
+████████████░░░░░░░░░░░░░░░░░░░███████████████████
+███████████░░░░░░░░░░░░░░░░░░░░░██████████████████
+███████████░░░░░░░▀▀▄▄▄▄▄▄░░░░░░██████████████████
+██████████▌░░░░░▄▀▀░░░░░░░▀▄░░░░▐█████████████████
+█████████▐░░░░░▄▀░░░▀▄░░░░░░▀▄░░░▌████████████████
+█████████▐░░░░▐▌░░░░░░▀▄░░░░░▐▌░░░▌███████████████
+█████████▌░░░░▐▌░░░░░░░▐▌░░░░░▀▄░░▐███████████████
+█████████▌░░░░░▀▄░░░░░░░▀▄░░░░▐▌░░▐███████████████
+█████████▐░░░░░░░▀▄░░░░░░▀▄░░▄▀░░░▌███████████████
+█████████▐░░░░░░░░░▀▄░░░░░░▀▄▀░░░░▐███████████████
+██████████▌░░░░░░░░░░▀▄░░░░░░░░░░▐████████████████
+███████████░░░░░░░░░░░░▀▄░░░░░░░██████████████████
+███████████▄░░░░░░░░░░░░░▀▄░░░░▄██████████████████
+█████████████▄░░░░░░░░░░░░░▀▄▄▀███████████████████
+████████████████▄▄▄░░░░░░░▄▄▄█████████████████████
+██████████████████████████████████████████████████
+"""
 
-# The widget for all commands
+
 class CommandPanel(Static):
     def on_mount(self) -> None:
-        commands: str = ""
-        for cmd in COMMANDS:
-            commands += f"\n[b]{cmd}[/b] -- {COMMANDS[cmd]}\n"
-        self.update(commands)
+        commands_text: str = ""
+        for cmd, desc in COMMANDS.items():
+            commands_text += f"\n[b]{cmd}[/b] -- {desc}\n"
+        self.update(commands_text)
 
 
-# The main container
 class VoidApp(App[None]):
     TITLE = "V.O.I.D Engine v1.0"
     SUB_TITLE = "The powers from future.. in your terminal!"
-    BINDINGS = [("q", "exit_app", "Exit")]
+    BINDINGS = [("q", "quit", "Exit")]
 
     CSS_PATH = "tui.tcss"
 
-    is_true: bool = False
-
     def __init__(self) -> None:
         super().__init__()
-
         self.is_awake: bool = False
 
     def compose(self) -> ComposeResult:
@@ -47,13 +73,15 @@ class VoidApp(App[None]):
             id="app_grid",
         )
 
-    def reset_border_styles(self) -> None:
-        command_input = self.query("#command_input").first(Input)
-        command_input.styles.border = ("solid", "green")
+    def reset_input_border(self) -> None:
+        command_input = self.query_one(Input)
+        command_input.styles.border = ("round", "darkgreen")
         command_input.placeholder = "type 'awaken' and press Enter"
 
-    def on_input_submitted(self, event: Input.Submitted):
-        command_input = self.query("#command_input").first(Input)
+    async def on_input_submitted(self, event: Input.Submitted) -> None:
+        command_input = event.input
+        user_text = command_input.value.strip().lower()
+        log_panel = self.query_one("#logs_panel", Static)
 
         if event.value.lower() == "awaken":
             self.is_awake: bool = True
