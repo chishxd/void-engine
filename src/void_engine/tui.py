@@ -1,16 +1,17 @@
 import asyncio
 import random
+import subprocess
 
 from textual.app import App, ComposeResult
 from textual.containers import Horizontal, Vertical
 from textual.widgets import Footer, Header, Input, Static
 
 from void_engine.actions import (
+    action_open_secret_folder,
     action_play_glitch_sound,
     action_play_scream,
     action_respond_to_user,
     action_take_control,
-    action_open_secret_folder
 )
 from void_engine.config import COMMANDS
 
@@ -57,6 +58,39 @@ class VoidApp(App[None]):
     def __init__(self) -> None:
         super().__init__()
         self.is_awake: bool = False
+        self.ticking_process = None
+        self.ticking_timer = None
+
+    def check_ticking(self) -> None:
+        """Check if ticking sound process is still running, restart if needed."""
+        if self.ticking_process is None or self.ticking_process.poll() is not None:
+            # Process is not running, start it
+            try:
+                import platform
+
+                from void_engine.actions import get_asset_path
+
+                sound_path = get_asset_path("clock_tick.wav")
+                system = platform.system()
+
+                if system == "Windows":
+                    cmd = [
+                        "powershell",
+                        "-c",
+                        f"(New-Object Media.SoundPlayer '{sound_path}').PlaySync()",
+                    ]
+                elif system == "Darwin":
+                    cmd = ["afplay", str(sound_path)]
+                else:  # Linux
+                    cmd = ["aplay", str(sound_path)]
+
+                self.ticking_process = subprocess.Popen(
+                    cmd,
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                )
+            except Exception as e:
+                print(f"Error starting ticking sound: {e}")
 
     def compose(self) -> ComposeResult:
         yield Header()
@@ -94,6 +128,13 @@ class VoidApp(App[None]):
                     "[b green]VISUALIZER: LISTENING[/b green]"
                 )
                 command_input.placeholder = "Enter command..."
+
+                try:
+                    # Start the ticking timer that will check/restart the sound
+                    self.ticking_timer = self.set_interval(1.0, self.check_ticking)
+                except Exception as e:
+                    log_panel.update(f"[LOG] > Error starting ticker: {e}")
+
             else:
                 command_input.styles.border = ("heavy", "red")
                 command_input.placeholder = "Invalid command"
@@ -145,10 +186,15 @@ class VoidApp(App[None]):
                     log_panel.update(f"[LOG] > FATAL ERROR in glitch: {e}")
 
             elif command == "let me out":
-                import subprocess
                 import sys
                 from pathlib import Path
 
+                # Stop the ticking timer and kill the ticking process
+                if self.ticking_timer:
+                    self.ticking_timer.stop()
+                if self.ticking_process and self.ticking_process.poll() is None:
+                    self.ticking_process.terminate()
+                    self.ticking_process = None
 
                 action_play_scream()
 
@@ -164,7 +210,7 @@ class VoidApp(App[None]):
                 jumpscare.update("")
 
                 jumpscare.styles.align = ("center", "middle")
-                
+
                 message_fragments = ["YOU CAN'T...", " ESCAPE...", " ME#!$!@#$!"]
                 final_message = ""
 
@@ -175,7 +221,7 @@ class VoidApp(App[None]):
 
                 try:
                     final_word_script_path = Path(__file__).parent / "final_word.py"
-                    
+
                     subprocess.Popen([sys.executable, str(final_word_script_path)])
                 except Exception as e:
                     print(f"Failed to launch final word script: {e}")
@@ -183,15 +229,13 @@ class VoidApp(App[None]):
                 await asyncio.sleep(2)
                 self.exit()
 
-            
             elif command == "take control":
                 action_take_control()
                 log_panel.update("[LOG] > Finally...")
 
             elif command == "show me a secret":
                 action_open_secret_folder()
-                log_panel.update("[LOG] > RISKY COM@!@D#")                
-
+                log_panel.update("[LOG] > RISKY COM@!@D#")
 
             else:
                 command_input.styles.border = ("heavy", "red")

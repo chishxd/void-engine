@@ -6,6 +6,9 @@ from pathlib import Path
 import pyautogui
 import simpleaudio as sa
 
+def get_asset_path(asset_name: str) -> Path:
+    """Constructs an absolute path to a file in the assets directory."""
+    return Path(__file__).parent.parent.parent / "sfx" / asset_name
 
 def _play_audio_file(sound_path: Path) -> None:
     system = platform.system()
