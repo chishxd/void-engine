@@ -15,26 +15,27 @@ from void_engine.actions import (
 from void_engine.config import COMMANDS
 
 JUMPSCARE_ART = """
-██████████████████████████████████████████████████
-██████████████████████████████████████████████████
-███████████████▀▀▀▀▀▀▀▀▀▀▀▀▀██████████████████████
-█████████████▀░░░░░░░░░░░░░░░▀████████████████████
-████████████░░░░░░░░░░░░░░░░░░░███████████████████
-███████████░░░░░░░░░░░░░░░░░░░░░██████████████████
-███████████░░░░░░░▀▀▄▄▄▄▄▄░░░░░░██████████████████
-██████████▌░░░░░▄▀▀░░░░░░░▀▄░░░░▐█████████████████
-█████████▐░░░░░▄▀░░░▀▄░░░░░░▀▄░░░▌████████████████
-█████████▐░░░░▐▌░░░░░░▀▄░░░░░▐▌░░░▌███████████████
-█████████▌░░░░▐▌░░░░░░░▐▌░░░░░▀▄░░▐███████████████
-█████████▌░░░░░▀▄░░░░░░░▀▄░░░░▐▌░░▐███████████████
-█████████▐░░░░░░░▀▄░░░░░░▀▄░░▄▀░░░▌███████████████
-█████████▐░░░░░░░░░▀▄░░░░░░▀▄▀░░░░▐███████████████
-██████████▌░░░░░░░░░░▀▄░░░░░░░░░░▐████████████████
-███████████░░░░░░░░░░░░▀▄░░░░░░░██████████████████
-███████████▄░░░░░░░░░░░░░▀▄░░░░▄██████████████████
-█████████████▄░░░░░░░░░░░░░▀▄▄▀███████████████████
-████████████████▄▄▄░░░░░░░▄▄▄█████████████████████
-██████████████████████████████████████████████████
+⠀⠀⠀⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⡄⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⢀⡿⣷⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⠄⠀⠀⠀
+⠀⠀⠀⠀⢰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡆⠀⠀⠀
+⠀⠀⠀⢠⣿⣇⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠀⠀⠀
+⠀⠀⠀⠀⣻⣿⣿⣿⣿⡿⡿⣿⣿⣿⣿⣿⣿⣿⣿⣯⣟⣿⣿⣿⣿⣷⣭⠀⠀⠀
+⠀⠀⠀⠀⣻⣿⠟⠛⠉⠁⠈⠉⠻⢿⣿⣿⣿⡟⠛⠂⠉⠁⠈⠉⠁⠻⣿⠀⠀⠀
+⠀⠀⠀⠀⢾⠀⠀⣠⠄⠻⣆⠀⠈⠠⣻⣿⣟⠁⠀⠀⠲⠛⢦⡀⠀⠠⠁⠀⠀⠀
+⠀⠀⠀⠀⢱⣄⡀⠘⠀⠸⠉⠀⠀⢰⣿⣷⣿⠂⢀⠀⠓⡀⠞⠀⢀⣀⠀⠀⠀⠀
+⠀⠀⠀⠀⠠⣿⣷⣶⣶⣶⣾⣿⠀⠸⣿⣿⣿⣶⣿⣧⣴⣴⣶⣶⣿⡟⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⢿⣿⣿⣿⣿⣿⣏⠇⠄⣿⣿⣿⣿⣿⣿⣿⣿⣿⣟⣾⠁⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⢺⣿⣿⣿⣿⣟⡿⠂⠈⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠑⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠈⣿⣿⣿⣿⣿⠀⠀⠈⠿⣿⣿⣿⣿⣿⣿⣿⣿⠁⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠄⢻⣿⣿⣿⡗⠀⠀⠀⠀⠈⠀⢨⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⡞⠷⠿⠿⠀⠀⠀⠀⢀⣘⣤⣿⣿⣿⣿⣿⡏⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠼⠉⠀⠀⠀⠀⠀⠚⢻⠿⠟⠓⠛⠂⠉⠉⠁⠀⡁⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣼⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⣿⡿⡀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⢾⠻⠌⣄⡁⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣀⣀⣀⡠⡲⠞⡁⠈⡈⣿⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⠘⠛⠻⢯⠟⠩⠀⠀⢠⣣⠈⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠄⠂⣰⣧⣾⠶⠀⠀⠀⠀⠀⠀⠀
 """
 
 
@@ -144,6 +145,11 @@ class VoidApp(App[None]):
                     log_panel.update(f"[LOG] > FATAL ERROR in glitch: {e}")
 
             elif command == "let me out":
+                import subprocess
+                import sys
+                from pathlib import Path
+
+
                 action_play_scream()
 
                 jumpscare = Static(f"[b red]{JUMPSCARE_ART}[/b red]", id="jumpscare")
@@ -157,7 +163,26 @@ class VoidApp(App[None]):
                 await asyncio.sleep(3)
                 jumpscare.update("")
 
-                self.set_timer(1, self.exit)
+                jumpscare.styles.align = ("center", "middle")
+                
+                message_fragments = ["YOU CAN'T...", " ESCAPE...", " ME#!$!@#$!"]
+                final_message = ""
+
+                for fragment in message_fragments:
+                    final_message += fragment
+                    jumpscare.update(f"[b red blink]{final_message}[/b red blink]")
+                    await asyncio.sleep(1)
+
+                try:
+                    final_word_script_path = Path(__file__).parent / "final_word.py"
+                    
+                    subprocess.Popen([sys.executable, str(final_word_script_path)])
+                except Exception as e:
+                    print(f"Failed to launch final word script: {e}")
+
+                await asyncio.sleep(2)
+                self.exit()
+
             
             elif command == "take control":
                 action_take_control()
@@ -169,8 +194,14 @@ class VoidApp(App[None]):
 
 
             else:
+                command_input.styles.border = ("heavy", "red")
+                command_input.placeholder = "Invalid command"
+                self.set_timer(1.0, self.reset_input_border)
                 log_panel.update(f"[LOG] > Unknown command: '{command}'")
         else:
+            command_input.styles.border = ("heavy", "red")
+            command_input.placeholder = "Invalid command"
+            self.set_timer(1.0, self.reset_input_border)
             log_panel.update("[LOG] > ...")
 
         command_input.value = ""

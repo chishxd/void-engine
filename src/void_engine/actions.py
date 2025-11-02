@@ -1,12 +1,10 @@
 import platform
 import subprocess
 import time
-import tkinter as tk
 from pathlib import Path
 
 import pyautogui
 import simpleaudio as sa
-from PIL import ImageTk
 
 
 def _play_audio_file(sound_path: Path) -> None:
@@ -70,7 +68,7 @@ def play_sound(sound_path: Path, duration_seconds: float) -> None:
 def action_respond_to_user() -> None:
     try:
         script_path = Path(__file__)
-        sound_path = script_path.parent.parent.parent / "sfx" / "whispers.wav"
+        sound_path = script_path.parent.parent.parent / "sfx" / "connected.wav"
         _play_audio_file(sound_path)
 
     except Exception as e:
@@ -128,20 +126,20 @@ def action_open_secret_folder() -> None:
         print(f"Error in action_open_secret_folder : {e}")
 
 
-def show_image(image_path: str, duration_ms: int):
-    root = tk.Tk()
+# def show_image(image_path: str, duration_ms: int):
+#     root = tk.Tk()
 
-    root.attributes("-fullscreen", True)
-    root.attributes("-topmost", True)
-    root.config(cursor="none")
+#     root.attributes("-fullscreen", True)
+#     root.attributes("-topmost", True)
+#     root.config(cursor="none")
 
-    img = ImageTk.PhotoImage(file=image_path)
-    label = tk.Label(root, image=img)
-    label.pack()
+#     img = ImageTk.PhotoImage(file=image_path)
+#     label = tk.Label(root, image=img)
+#     label.pack()
 
-    root.after(duration_ms, root.destroy)
+#     root.after(duration_ms, root.destroy)
 
-    root.mainloop()
+#     root.mainloop()
 
 
 # def action_glitch_screen() -> None:
