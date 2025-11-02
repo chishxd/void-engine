@@ -1,10 +1,60 @@
 import platform
 import subprocess
 import time
+import tkinter as tk
 from pathlib import Path
 
 import pyautogui
 import simpleaudio as sa
+from PIL import ImageTk
+
+
+def _play_audio_file(sound_path: Path) -> None:
+    system = platform.system()
+
+    if system == "Windows":
+        # Windows: Use PowerShell's media player
+        subprocess.Popen(
+            [
+                "powershell",
+                "-c",
+                f"(New-Object Media.SoundPlayer '{sound_path}').PlaySync()",
+            ],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+    elif system == "Darwin":
+        subprocess.Popen(
+            ["afplay", str(sound_path)],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+    else:
+        subprocess.Popen(
+            ["aplay", str(sound_path)],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+
+
+def action_play_scream() -> None:
+    try:
+        script_path = Path(__file__).parent.parent.parent
+        sound_path = script_path / "sfx" / "scream.wav"
+        _play_audio_file(sound_path)
+
+    except Exception as e:
+        print(f"Error in action_play_scream: {e}")
+
+
+def action_play_glitch_sound() -> None:
+    try:
+        script_path = Path(__file__).parent.parent.parent
+        sound_path = script_path / "sfx" / "glitch.wav"
+        _play_audio_file(sound_path)
+
+    except Exception as e:
+        print(f"Error in action_play_glitch_sound: {e}")
 
 
 def play_sound(sound_path: Path, duration_seconds: float) -> None:
@@ -17,12 +67,11 @@ def play_sound(sound_path: Path, duration_seconds: float) -> None:
         play_obj.stop()
 
 
-def action_respond_to_user():
+def action_respond_to_user() -> None:
     try:
         script_path = Path(__file__)
         sound_path = script_path.parent.parent.parent / "sfx" / "whispers.wav"
-
-        play_sound(sound_path, 3.0)
+        _play_audio_file(sound_path)
 
     except Exception as e:
         print(f"Error in action_respond_to_user: {e}")
