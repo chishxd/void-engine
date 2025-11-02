@@ -9,6 +9,7 @@ from void_engine.actions import (
     action_play_glitch_sound,
     action_play_scream,
     action_respond_to_user,
+    action_take_control
 )
 from void_engine.config import COMMANDS
 
@@ -156,8 +157,15 @@ class VoidApp(App[None]):
                 jumpscare.update("")
 
                 self.set_timer(1, self.exit)
+            
+            elif command == "take control":
+                action_take_control()
+                log_panel.update("[LOG] > Finally...")
+
 
             else:
                 log_panel.update(f"[LOG] > Unknown command: '{command}'")
+        else:
+            log_panel.update("[LOG] > ...")
 
         command_input.value = ""
